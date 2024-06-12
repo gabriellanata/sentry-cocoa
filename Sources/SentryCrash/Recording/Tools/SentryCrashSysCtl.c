@@ -263,3 +263,22 @@ sentrycrashsysctl_getMacAddress(const char *const name, char *const macAddressBu
 
     return true;
 }
+
+bool
+sentrycrashsysctl_isRosettaTranslated(void)
+{
+#if TARGET_OS_MAC
+    int ret = 0;
+    size_t size = sizeof(ret);
+    if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) == -1) {
+        if (errno == ENOENT) {
+            return false;
+        }
+        SentryCrashLOG_ERROR("sysctl.proc_translated failed to get Rosetta 2 translation status.");
+        return false;
+    }
+    return ret == 1;
+#else
+    return false;
+#endif // TARGET_OS_MAC
+}

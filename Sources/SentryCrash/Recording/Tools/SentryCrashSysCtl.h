@@ -182,6 +182,8 @@ bool sentrycrashsysctl_getProcessInfo(int pid, struct kinfo_proc *procInfo);
  */
 bool sentrycrashsysctl_getMacAddress(const char *name, char *macAddressBuffer);
 
+bool sentrycrashsysctl_isRosettaTranslated(void);
+
 #ifdef __cplusplus
 }
 #endif

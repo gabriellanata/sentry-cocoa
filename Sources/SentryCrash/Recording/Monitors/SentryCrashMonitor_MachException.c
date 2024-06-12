@@ -30,6 +30,7 @@
 #include "SentryCrashID.h"
 #include "SentryCrashMonitorContext.h"
 #include "SentryCrashStackCursor_MachineContext.h"
+#include "SentryCrashSysCtl.h"
 #include "SentryCrashSystemCapabilities.h"
 #include "SentryCrashThread.h"
 #include "SentryInternalCDefines.h"
@@ -38,6 +39,7 @@
 
 #if SentryCrashCRASH_HAS_MACH
 
+#    include <limits.h>
 #    include <mach/mach.h>
 #    include <pthread.h>
 #    include <signal.h>
@@ -451,7 +453,6 @@ installExceptionHandler(void)
     SentryCrashLOG_DEBUG("Installing mach exception handler.");
 
     bool attributes_created = false;
-    pthread_attr_t attr;
 
     kern_return_t kr;
     int error;
@@ -494,8 +495,28 @@ installExceptionHandler(void)
         goto failed;
     }
 
+    SentryCrashLOG_DEBUG("Initializing thread attributes struct.");
+    pthread_attr_t attr;
+    error = pthread_attr_init(&attr);
+    if (error != 0) {
+        SentryCrashLOG_ERROR("pthread_attr_init: %s", strerror(error));
+        goto failed;
+    }
+
+    // the following code to set up an alternate stack for the mach exception handler is inspired by
+    // Firebase Crashlytics' implementation
+    SentryCrashLOG_DEBUG("Setting up alternate stack for mach exception thread.");
+
+    // the stack size must be at least PTHREAD_STACK_MIN, which is platform-dependent; we'll
+    // multiply it to get more headroom; the stack must be page-aligned, so we get the page size of
+    // the current system and add a multiple of that value
+    uint64_t pageSize = sentrycrashsysctl_uint64ForName("pagesize");
+    if (pageSize == 0) {
+        pageSize = SENTRY_CRASH_MAX_PAGE_SIZE;
+    }
+    error = pthread_attr_setstack(&attr, <#void *_Nonnull #>, PTHREAD_STACK_MIN + pageSize * 16);
+
     SentryCrashLOG_DEBUG("Creating secondary exception thread (suspended).");
-    pthread_attr_init(&attr);
     attributes_created = true;
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
     error = pthread_create(&g_secondaryPThread, &attr, &handleExceptions, kThreadSecondary);

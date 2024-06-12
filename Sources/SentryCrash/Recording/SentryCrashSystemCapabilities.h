@@ -24,103 +24,114 @@
 //
 
 #ifndef HDR_SentryCrashSystemCapabilities_h
-#define HDR_SentryCrashSystemCapabilities_h
+#    define HDR_SentryCrashSystemCapabilities_h
 
-#ifdef __APPLE__
-#    include <TargetConditionals.h>
-#    define SentryCrashCRASH_HOST_APPLE 1
-#endif
+#    ifdef __APPLE__
+#        include <TargetConditionals.h>
+#        define SentryCrashCRASH_HOST_APPLE 1
+#    endif
 
-#ifdef __ANDROID__
-#    define SentryCrashCRASH_HOST_ANDROID 1
-#endif
+#    ifdef __ANDROID__
+#        define SentryCrashCRASH_HOST_ANDROID 1
+#    endif
 
-#ifndef TARGET_OS_VISION
-#    define TARGET_OS_VISION 0
-#endif
+#    ifndef TARGET_OS_VISION
+#        define TARGET_OS_VISION 0
+#    endif
 
-#define SentryCrashCRASH_HOST_IOS (SentryCrashCRASH_HOST_APPLE && TARGET_OS_IOS)
-#define SentryCrashCRASH_HOST_TV (SentryCrashCRASH_HOST_APPLE && TARGET_OS_TV)
-#define SentryCrashCRASH_HOST_WATCH (SentryCrashCRASH_HOST_APPLE && TARGET_OS_WATCH)
-#define SentryCrashCRASH_HOST_VISION (SentryCrashCRASH_HOST_APPLE && TARGET_OS_VISION)
-#define SentryCrashCRASH_HOST_MAC                                                                  \
-    (SentryCrashCRASH_HOST_APPLE && TARGET_OS_MAC                                                  \
-        && !(TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH || TARGET_OS_VISION))
+#    define SentryCrashCRASH_HOST_IOS (SentryCrashCRASH_HOST_APPLE && TARGET_OS_IOS)
+#    define SentryCrashCRASH_HOST_TV (SentryCrashCRASH_HOST_APPLE && TARGET_OS_TV)
+#    define SentryCrashCRASH_HOST_WATCH (SentryCrashCRASH_HOST_APPLE && TARGET_OS_WATCH)
+#    define SentryCrashCRASH_HOST_VISION (SentryCrashCRASH_HOST_APPLE && TARGET_OS_VISION)
+#    define SentryCrashCRASH_HOST_MAC                                                              \
+        (SentryCrashCRASH_HOST_APPLE && TARGET_OS_MAC                                              \
+            && !(TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH || TARGET_OS_VISION))
 
-#if SentryCrashCRASH_HOST_APPLE
-#    define SentryCrashCRASH_CAN_GET_MAC_ADDRESS 1
-#else
-#    define SentryCrashCRASH_CAN_GET_MAC_ADDRESS 0
-#endif
+#    if SentryCrashCRASH_HOST_APPLE
+#        define SentryCrashCRASH_CAN_GET_MAC_ADDRESS 1
+#    else
+#        define SentryCrashCRASH_CAN_GET_MAC_ADDRESS 0
+#    endif
 
-#if SentryCrashCRASH_HOST_APPLE
-#    define SentryCrashCRASH_HAS_OBJC 1
-#    define SentryCrashCRASH_HAS_SWIFT 1
-#else
-#    define SentryCrashCRASH_HAS_OBJC 0
-#    define SentryCrashCRASH_HAS_SWIFT 0
-#endif
+#    if SentryCrashCRASH_HOST_APPLE
+#        define SentryCrashCRASH_HAS_OBJC 1
+#        define SentryCrashCRASH_HAS_SWIFT 1
+#    else
+#        define SentryCrashCRASH_HAS_OBJC 0
+#        define SentryCrashCRASH_HAS_SWIFT 0
+#    endif
 
-#if SentryCrashCRASH_HOST_APPLE
-#    define SentryCrashCRASH_HAS_KINFO_PROC 1
-#else
-#    define SentryCrashCRASH_HAS_KINFO_PROC 0
-#endif
+#    if SentryCrashCRASH_HOST_APPLE
+#        define SentryCrashCRASH_HAS_KINFO_PROC 1
+#    else
+#        define SentryCrashCRASH_HAS_KINFO_PROC 0
+#    endif
 
-#if SentryCrashCRASH_HOST_APPLE
-#    define SentryCrashCRASH_HAS_STRNSTR 1
-#else
-#    define SentryCrashCRASH_HAS_STRNSTR 0
-#endif
+#    if SentryCrashCRASH_HOST_APPLE
+#        define SentryCrashCRASH_HAS_STRNSTR 1
+#    else
+#        define SentryCrashCRASH_HAS_STRNSTR 0
+#    endif
 
-#if SentryCrashCRASH_HOST_WATCH
-#    define SentryCrashCRASH_HAS_NSEXTENSION 1
-#else
-#    define SentryCrashCRASH_HAS_NSEXTENSION 0
-#endif
+#    if SentryCrashCRASH_HOST_WATCH
+#        define SentryCrashCRASH_HAS_NSEXTENSION 1
+#    else
+#        define SentryCrashCRASH_HAS_NSEXTENSION 0
+#    endif
 
-#if SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_TV
-#    define SentryCrashCRASH_HAS_ALERTVIEW 1
-#else
-#    define SentryCrashCRASH_HAS_ALERTVIEW 0
-#endif
+#    if SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_TV
+#        define SentryCrashCRASH_HAS_ALERTVIEW 1
+#    else
+#        define SentryCrashCRASH_HAS_ALERTVIEW 0
+#    endif
 
-#if SentryCrashCRASH_HOST_MAC
-#    define SentryCrashCRASH_HAS_NSALERT 1
-#else
-#    define SentryCrashCRASH_HAS_NSALERT 0
-#endif
+#    if SentryCrashCRASH_HOST_MAC
+#        define SentryCrashCRASH_HAS_NSALERT 1
+#    else
+#        define SentryCrashCRASH_HAS_NSALERT 0
+#    endif
 
-#if SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_MAC
-#    define SentryCrashCRASH_HAS_MACH 1
-#else
-#    define SentryCrashCRASH_HAS_MACH 0
-#endif
+#    if SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_MAC
+#        define SentryCrashCRASH_HAS_MACH 1
+#    else
+#        define SentryCrashCRASH_HAS_MACH 0
+#    endif
 
 // WatchOS signal is broken as of 3.1
-#if SentryCrashCRASH_HOST_ANDROID || SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_MAC        \
-    || SentryCrashCRASH_HOST_TV
-#    define SentryCrashCRASH_HAS_SIGNAL 1
-#else
-#    define SentryCrashCRASH_HAS_SIGNAL 0
-#endif
+#    if SentryCrashCRASH_HOST_ANDROID || SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_MAC    \
+        || SentryCrashCRASH_HOST_TV
+#        define SentryCrashCRASH_HAS_SIGNAL 1
+#    else
+#        define SentryCrashCRASH_HAS_SIGNAL 0
+#    endif
 
-#if SentryCrashCRASH_HOST_ANDROID || SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_IOS
-#    define SentryCrashCRASH_HAS_SIGNAL_STACK 1
-#else
-#    define SentryCrashCRASH_HAS_SIGNAL_STACK 0
-#endif
+#    if SentryCrashCRASH_HOST_ANDROID || SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_IOS
+#        define SentryCrashCRASH_HAS_SIGNAL_STACK 1
+#    else
+#        define SentryCrashCRASH_HAS_SIGNAL_STACK 0
+#    endif
 
-#if SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_TV
-#    define SentryCrashCRASH_HAS_THREADS_API 1
-#else
-#    define SentryCrashCRASH_HAS_THREADS_API 0
-#endif
+#    if SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_TV
+#        define SentryCrashCRASH_HAS_THREADS_API 1
+#    else
+#        define SentryCrashCRASH_HAS_THREADS_API 0
+#    endif
 
-#if SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_TV
-#    define SentryCrashCRASH_HAS_REACHABILITY 1
-#else
-#    define SentryCrashCRASH_HAS_REACHABILITY 0
-#endif
+#    if SentryCrashCRASH_HOST_MAC || SentryCrashCRASH_HOST_IOS || SentryCrashCRASH_HOST_TV
+#        define SentryCrashCRASH_HAS_REACHABILITY 1
+#    else
+#        define SentryCrashCRASH_HAS_REACHABILITY 0
+#    endif
 
 #endif // HDR_SentryCrashSystemCapabilities_h
+
+// default fallback page sizes
+// arm64: 64KB
+// x86_64: 4KB
+#if TARGET_CPU_ARM64
+#    define SENTRY_CRASH_MAX_PAGE_SIZE (1024 * 16)
+#else
+#    define SENTRY_CRASH_MAX_PAGE_SIZE (1024 * 4)
+#endif //  TARGET_CPU_ARM64
+
+#define SENTRY_CRASH_MIN_PAGE_SIZE (1024 * 4)
