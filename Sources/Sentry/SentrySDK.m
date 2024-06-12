@@ -523,7 +523,21 @@ static NSDate *_Nullable startTimestamp = nil;
     int *p = 0;
     *p = 0;
 }
-#endif
+
+#    if defined(TEST) || defined(TESTCI) || defined(DEBUG)
++ (void)crashBufferOverflow
+{
+    char buffer[10];
+    // Intentionally write beyond the buffer's boundary
+    for (int i = 0; i < 20; i++) {
+        buffer[i] = 'a' + i;
+    }
+    // This access causes a crash due to stack buffer overflow
+    printf("Buffer content: %s\n", buffer);
+}
+#    endif // defined(TEST) || defined(TESTCI) || defined(DEBUG)
+
+#endif // __clang_analyzer__
 
 #if SENTRY_TARGET_PROFILING_SUPPORTED
 + (void)startProfiler

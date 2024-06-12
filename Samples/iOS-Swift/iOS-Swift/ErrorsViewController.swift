@@ -30,9 +30,13 @@ class ErrorsViewController: UIViewController {
         // As we are writing to disk continuously we would keep adding spans to this UIEventTransaction.
         SentrySDK.span?.finish()
     }
-
+    
     @IBAction func crash(_ sender: UIButton) {
         SentrySDK.crash()
+    }
+    
+    @IBAction func crashBufferOverflow(_ sender: UIButton) {
+        SentrySDK.crashBufferOverflow()
     }
 
     // swiftlint:disable force_unwrapping

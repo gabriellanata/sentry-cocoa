@@ -66,6 +66,8 @@ SentrySDK ()
 + (void)stopProfiler;
 #endif // SENTRY_TARGET_PROFILING_SUPPORTED
 
++ (void)crashBufferOverflow;
+
 @end
 
 NS_ASSUME_NONNULL_END
