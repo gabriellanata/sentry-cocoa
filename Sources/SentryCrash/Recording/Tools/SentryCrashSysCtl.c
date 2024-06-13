@@ -264,6 +264,8 @@ sentrycrashsysctl_getMacAddress(const char *const name, char *const macAddressBu
     return true;
 }
 
+// implementation based on
+// https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment
 bool
 sentrycrashsysctl_isRosettaTranslated(void)
 {
